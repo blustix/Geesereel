@@ -1,0 +1,8 @@
+version: "Apple Swift version 5.7 (swiftlang-5.7.0.127.4 clang-1400.0.29.50)"
+options: "33042a032981c455bbee4d5627fcfe9de99ffca30c5beea5a7268ba4e78ce0e6"
+build_start_time: [1667514103, 451177120]
+build_end_time: [1667514104, 379791021]
+inputs:
+  "/Users/oscarchung/Documents/Mobile App Stuff/geese_reel/macos/Flutter/GeneratedPluginRegistrant.swift": [1667514100, 252359867]
+  "/Users/oscarchung/Documents/Mobile App Stuff/geese_reel/macos/Runner/AppDelegate.swift": [1666801928, 0]
+  "/Users/oscarchung/Documents/Mobile App Stuff/geese_reel/macos/Runner/MainFlutterWindow.swift": [1666801928, 0]
