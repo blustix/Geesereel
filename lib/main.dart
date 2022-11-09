@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MaterialApp(
-    title: 'Navigation Basics',
+    title: 'Homepage',
     home: FirstRoute(),
   ));
 }
@@ -14,11 +14,11 @@ class FirstRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('First Route'),
+        title: const Text('GeeseReel'),
       ),
       body: Center(
         child: ElevatedButton(
-          child: const Text('Open route'),
+          child: const Text('Daily Photo'),
           onPressed: () {
             // Navigate to second route when tapped.
             Navigator.push(
@@ -39,16 +39,10 @@ class SecondRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Second Route'),
+        title: const Text('Goose Time!'),
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // Navigate back to first route when tapped.
-            Navigator.pop(context);
-          },
-          child: const Text('Go back!'),
-        ),
+        // add camera features here
       ),
     );
   }
