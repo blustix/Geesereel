@@ -11,6 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:geese_reel/main.dart';
 
 import 'package:camera/camera.dart';
+import '../lib/camera.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
