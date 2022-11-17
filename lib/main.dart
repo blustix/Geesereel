@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'camera.dart';
+
 void main() {
   runApp(const MaterialApp(
     title: 'Homepage',
@@ -42,7 +44,7 @@ class SecondRoute extends StatelessWidget {
         title: const Text('Goose Time!'),
       ),
       body: Center(
-        // add camera features here
+
       ),
     );
   }
