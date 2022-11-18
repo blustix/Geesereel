@@ -25,26 +25,10 @@ class FirstRoute extends StatelessWidget {
             // Navigate to second route when tapped.
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const SecondRoute()),
+              MaterialPageRoute(builder: (context) => TakePictureScreen()),
             );
           },
         ),
-      ),
-    );
-  }
-}
-
-class SecondRoute extends StatelessWidget {
-  const SecondRoute({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Goose Time!'),
-      ),
-      body: Center(
-
       ),
     );
   }
