@@ -5,12 +5,12 @@ import 'camera.dart';
 void main() {
   runApp(const MaterialApp(
     title: 'Homepage',
-    home: FirstRoute(),
+    home: HomePage(),
   ));
 }
 
-class FirstRoute extends StatelessWidget {
-  const FirstRoute({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class FirstRoute extends StatelessWidget {
             // Navigate to second route when tapped.
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => TakePictureScreen()),
+              MaterialPageRoute(builder: (context) => const TakePictureScreen()),
             );
           },
         ),

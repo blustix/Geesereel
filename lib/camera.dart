@@ -19,26 +19,26 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
 
-  late final cameras;
-
-  void getCameras() async {
-    cameras = await availableCameras();
-  }
-
   @override
   void initState() {
-    super.initState();
+    var cameras;
+    var firstCamera;
+    void getCameras() async {
+      WidgetsFlutterBinding.ensureInitialized();
+      cameras = availableCameras();
 
+      // Get a specific camera from the list of available cameras.
+      firstCamera = cameras.first;
+    }
     getCameras();
 
-    // Get a specific camera from the list of available cameras.
-    final firstCamera = cameras.first;
+    super.initState();
 
     // To display the current output from the Camera,
     // create a CameraController.
     _controller = CameraController(
       // Get a specific camera from the list of available cameras.
-      widget.camera,
+      firstCamera,
       // Define the resolution to use.
       ResolutionPreset.medium,
     );
@@ -85,7 +85,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             // Attempt to take a picture and get the file `image`
             // where it was saved.
             final image = await _controller.takePicture();
-            image.saveTo('/Users/oscarchung/Desktop/image.png');
 
             if (!mounted) return;
 

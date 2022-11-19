@@ -19,10 +19,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         theme: ThemeData.dark(),
-        home: TakePictureScreen(
-          // Pass the appropriate camera to the TakePictureScreen widget.
-          camera: (await availableCameras()).first,
-        ),
+        home: HomePage(),
       ),
     );
 
