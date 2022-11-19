@@ -4,6 +4,9 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:flutter/material.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' show utf8;
 
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
@@ -30,6 +33,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       // Get a specific camera from the list of available cameras.
       firstCamera = cameras.first;
     }
+
     getCameras();
 
     super.initState();
@@ -91,7 +95,25 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             // If the picture was taken, save photo to photo gallery.
             GallerySaver.saveImage(image.path);
 
-            // Display it on a new screen.
+
+            // Send file to ML stuff using HTTP POST
+            http.MultipartRequest request =
+                http.MultipartRequest('POST', Uri.parse(url));
+
+            request.files.add(
+              await http.MultipartFile.fromPath(
+                'images',
+                image.path,
+                contentType: MediaType('application', 'jpeg'),
+              ),
+            );
+
+            http.StreamedResponse r = await request.send();
+            print(r.statusCode);
+            print(await r.stream.transform(utf8.decoder).join());
+
+
+            // Display photo on a new screen.
             await Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => DisplayPictureScreen(
