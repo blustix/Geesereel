@@ -8,10 +8,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:geese_reel/main.dart';
+import 'package:geese_reel/other-temp.dart';
 
 import 'package:camera/camera.dart';
-import '../lib/camera.dart';
+import 'package:geese_reel/other-temp.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
@@ -19,7 +19,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         theme: ThemeData.dark(),
-        home: HomePage(),
+        home: const HomePage(),
       ),
     );
 

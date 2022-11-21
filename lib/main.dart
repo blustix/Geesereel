@@ -8,15 +8,33 @@ import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' show utf8;
 
-void main() {
-  runApp(const MaterialApp(
-    title: 'Homepage',
-    home: HomePage(),
+Future<void> main() async {
+
+  // Ensure that plugin services are initialized so that `availableCameras()`
+  // can be called before `runApp()`
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Obtain a list of the available cameras on the device.
+  final cameras = await availableCameras();
+
+  // Get a specific camera from the list of available cameras.
+  final firstCamera = cameras.first;
+
+  runApp(MaterialApp(
+    title: 'Home',
+    home: HomePage(
+      camera: firstCamera,
+    ),
   ));
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  final CameraDescription camera;
+
+  const HomePage({
+    super.key,
+    required this.camera,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +49,11 @@ class HomePage extends StatelessWidget {
             // Navigate to second route when tapped.
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const TakePictureScreen()),
+              MaterialPageRoute(
+                builder: (context) => TakePictureScreen(
+                  camera: camera,
+                )
+              ),
             );
           },
         ),
@@ -44,7 +66,10 @@ class HomePage extends StatelessWidget {
 class TakePictureScreen extends StatefulWidget {
   const TakePictureScreen({
     super.key,
+    required this.camera,
   });
+
+  final CameraDescription camera;
 
   @override
   TakePictureScreenState createState() => TakePictureScreenState();
@@ -56,25 +81,12 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
   @override
   void initState() {
-    var cameras;
-    var firstCamera;
-    void getCameras() async {
-      WidgetsFlutterBinding.ensureInitialized();
-      cameras = availableCameras();
-
-      // Get a specific camera from the list of available cameras.
-      firstCamera = cameras.first;
-    }
-
-    getCameras();
-
     super.initState();
-
     // To display the current output from the Camera,
     // create a CameraController.
     _controller = CameraController(
       // Get a specific camera from the list of available cameras.
-      firstCamera,
+      widget.camera,
       // Define the resolution to use.
       ResolutionPreset.medium,
     );
@@ -93,7 +105,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Find a goose!')),
+      appBar: AppBar(title: const Text('Find a Goose!')),
       // You must wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner until the
       // controller has finished initializing.
@@ -127,10 +139,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             // If the picture was taken, save photo to photo gallery.
             GallerySaver.saveImage(image.path);
 
-
             // Send file to ML stuff using HTTP POST
             http.MultipartRequest request =
-                http.MultipartRequest('POST', Uri.parse(url));
+                http.MultipartRequest('POST', Uri.parse("google.com"));
 
             request.files.add(
               await http.MultipartFile.fromPath(
@@ -144,8 +155,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             print(r.statusCode);
             print(await r.stream.transform(utf8.decoder).join());
 
-
-            // Display photo on a new screen.
+            // If the picture was taken, display it on a new screen.
             await Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => DisplayPictureScreen(
