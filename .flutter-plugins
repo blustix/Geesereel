@@ -1,13 +1,13 @@
 # This is a generated file; do not edit or check into version control.
-camera=/Users/oscarchung/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/camera-0.10.0+4/
-camera_android=/Users/oscarchung/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/camera_android-0.10.0+4/
-camera_avfoundation=/Users/oscarchung/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/camera_avfoundation-0.9.8+6/
-camera_web=/Users/oscarchung/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/camera_web-0.3.0+1/
-flutter_plugin_android_lifecycle=/Users/oscarchung/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-2.0.7/
-gallery_saver=/Users/oscarchung/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/gallery_saver-0.0.5/
-path_provider=/Users/oscarchung/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-2.0.11/
-path_provider_android=/Users/oscarchung/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_android-2.0.21/
-path_provider_ios=/Users/oscarchung/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_ios-2.0.11/
-path_provider_linux=/Users/oscarchung/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-2.1.7/
-path_provider_macos=/Users/oscarchung/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-2.0.6/
-path_provider_windows=/Users/oscarchung/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-2.1.3/
+camera=/Users/oscarchung/.pub-cache/hosted/pub.dartlang.org/camera-0.10.0+4/
+camera_android=/Users/oscarchung/.pub-cache/hosted/pub.dartlang.org/camera_android-0.10.0+4/
+camera_avfoundation=/Users/oscarchung/.pub-cache/hosted/pub.dartlang.org/camera_avfoundation-0.9.8+6/
+camera_web=/Users/oscarchung/.pub-cache/hosted/pub.dartlang.org/camera_web-0.3.0+1/
+flutter_plugin_android_lifecycle=/Users/oscarchung/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-2.0.7/
+gallery_saver=/Users/oscarchung/.pub-cache/hosted/pub.dartlang.org/gallery_saver-2.3.2/
+path_provider=/Users/oscarchung/.pub-cache/hosted/pub.dartlang.org/path_provider-2.0.11/
+path_provider_android=/Users/oscarchung/.pub-cache/hosted/pub.dartlang.org/path_provider_android-2.0.21/
+path_provider_ios=/Users/oscarchung/.pub-cache/hosted/pub.dartlang.org/path_provider_ios-2.0.11/
+path_provider_linux=/Users/oscarchung/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-2.1.7/
+path_provider_macos=/Users/oscarchung/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-2.0.6/
+path_provider_windows=/Users/oscarchung/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-2.1.3/

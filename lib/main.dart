@@ -134,19 +134,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
             if (!mounted) return;
 
-            // If the picture was taken, display it on a new screen.
-            await Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => DisplayPictureScreen(
-                  // Pass the image to the DisplayPictureScreen widget.
-                  tempImagePath: image.path,
-                ),
-              ),
-            );
-
             // Send file to ML stuff using HTTP POST
             http.MultipartRequest request =
-                http.MultipartRequest('POST', Uri.parse("google.com"));
+                http.MultipartRequest('POST', Uri.parse("http://127.0.0.1:5000/upload"));
 
             request.files.add(
               await http.MultipartFile.fromPath(
@@ -158,7 +148,19 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
             http.StreamedResponse r = await request.send();
             print(r.statusCode);
-            print(await r.stream.transform(utf8.decoder).join());
+            final response = await r.stream.transform(utf8.decoder).join();
+
+            // If the picture was taken, display it on a new screen.
+            await Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => DisplayPictureScreen(
+                  // Pass the image to the DisplayPictureScreen widget.
+                  tempImagePath: image.path,
+                  isGoose: response,
+                ),
+              ),
+            );
+            
           } catch (e) {
             // If an error occurs, log the error to the console.
             print(e);
@@ -173,13 +175,14 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 // A widget that displays the picture taken by the user.
 class DisplayPictureScreen extends StatelessWidget {
   final String tempImagePath;
+  final String isGoose;
 
-  const DisplayPictureScreen({super.key, required this.tempImagePath});
+  const DisplayPictureScreen({super.key, required this.tempImagePath, required this.isGoose});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Your Score: ')),
+        appBar: AppBar(title: Text("Your Score: $isGoose")),
         // The image is stored as a file on the device. Use the `Image.file`
         // constructor with the given path to display the image.
         body: SafeArea(
