@@ -8,18 +8,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:geese_reel/other-temp.dart';
+import 'package:geese_reel/main.dart';
 
 import 'package:camera/camera.dart';
-import 'package:geese_reel/other-temp.dart';
+import 'package:geese_reel/main.dart';
 
-void main() {
+void main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final cameras = await availableCameras();
+
+  final firstCamera = cameras.first;
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(
       MaterialApp(
         theme: ThemeData.dark(),
-        home: const HomePage(),
+        home: HomePage(camera: firstCamera),
       ),
     );
 
