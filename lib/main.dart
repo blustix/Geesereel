@@ -9,7 +9,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' show utf8;
 
 Future<void> main() async {
-
   // Ensure that plugin services are initialized so that `availableCameras()`
   // can be called before `runApp()`
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,10 +49,9 @@ class HomePage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => TakePictureScreen(
-                  camera: camera,
-                )
-              ),
+                  builder: (context) => TakePictureScreen(
+                        camera: camera,
+                      )),
             );
           },
         ),
@@ -136,8 +134,15 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
             if (!mounted) return;
 
-            // If the picture was taken, save photo to photo gallery.
-            GallerySaver.saveImage(image.path);
+            // If the picture was taken, display it on a new screen.
+            await Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => DisplayPictureScreen(
+                  // Pass the image to the DisplayPictureScreen widget.
+                  tempImagePath: image.path,
+                ),
+              ),
+            );
 
             // Send file to ML stuff using HTTP POST
             http.MultipartRequest request =
@@ -154,16 +159,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             http.StreamedResponse r = await request.send();
             print(r.statusCode);
             print(await r.stream.transform(utf8.decoder).join());
-
-            // If the picture was taken, display it on a new screen.
-            await Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => DisplayPictureScreen(
-                  // Pass the image to the DisplayPictureScreen widget.
-                  tempImagePath: image.path,
-                ),
-              ),
-            );
           } catch (e) {
             // If an error occurs, log the error to the console.
             print(e);
@@ -184,10 +179,26 @@ class DisplayPictureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Da Goose Photo')),
-      // The image is stored as a file on the device. Use the `Image.file`
-      // constructor with the given path to display the image.
-      body: Image.asset(tempImagePath),
-    );
+        appBar: AppBar(title: const Text('Your Score: ')),
+        // The image is stored as a file on the device. Use the `Image.file`
+        // constructor with the given path to display the image.
+        body: SafeArea(
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                SizedBox(
+                  height: 200.0,
+                  width: 200.0,
+                  child: Image.asset(tempImagePath),
+                ),
+                ElevatedButton(
+                  child: const Text('Save Masterpiece?'),
+                  onPressed: () {
+                    // Save photo to image gallery
+                    GallerySaver.saveImage(tempImagePath);
+                  },
+                )
+              ]),
+        ));
   }
 }
