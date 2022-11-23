@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
+
 import 'package:camera/camera.dart';
 import 'package:gallery_saver/gallery_saver.dart';
-import 'package:flutter/material.dart';
+
 import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' show utf8;
@@ -87,6 +89,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       widget.camera,
       // Define the resolution to use.
       ResolutionPreset.medium,
+      imageFormatGroup: ImageFormatGroup.yuv420,
     );
 
     // Next, initialize the controller. This returns a Future.
@@ -135,8 +138,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             if (!mounted) return;
 
             // Send file to ML stuff using HTTP POST
-            http.MultipartRequest request =
-                http.MultipartRequest('POST', Uri.parse("http://127.0.0.1:5000/upload"));
+            http.MultipartRequest request = http.MultipartRequest(
+                'POST', Uri.parse('http://10.0.2.2:5000/upload'));
 
             request.files.add(
               await http.MultipartFile.fromPath(
@@ -147,7 +150,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             );
 
             http.StreamedResponse r = await request.send();
-            print(r.statusCode);
+            debugPrint(r.statusCode.toString());
             final response = await r.stream.transform(utf8.decoder).join();
 
             // If the picture was taken, display it on a new screen.
@@ -160,7 +163,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                 ),
               ),
             );
-            
           } catch (e) {
             // If an error occurs, log the error to the console.
             print(e);
@@ -177,7 +179,8 @@ class DisplayPictureScreen extends StatelessWidget {
   final String tempImagePath;
   final String isGoose;
 
-  const DisplayPictureScreen({super.key, required this.tempImagePath, required this.isGoose});
+  const DisplayPictureScreen(
+      {super.key, required this.tempImagePath, required this.isGoose});
 
   @override
   Widget build(BuildContext context) {
