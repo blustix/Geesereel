@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:camera/camera.dart';
 import 'package:gallery_saver/gallery_saver.dart';
+import 'package:image/image.dart' as img;
 
 import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
@@ -143,9 +144,10 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
             request.files.add(
               await http.MultipartFile.fromPath(
-                'images',
+                'image',
                 image.path,
-                contentType: MediaType('application', 'jpeg'),
+                filename: 'testimage',
+                contentType: MediaType('image', 'png'),
               ),
             );
 
