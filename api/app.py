@@ -62,7 +62,7 @@ def EVALUATE_IMG(IMG_DIR):
         transforms.ToTensor()
     ])
     img = torch.unsqueeze(data_transform(img).to(device), 0)
-    model = torch.load(MODEL_DIR)
+    model = torch.load(MODEL_DIR, map_location=torch.device('cpu'))
     result = model(img).squeeze()
     if result[0] < result[1] or result[0] < 0.5:
         return False

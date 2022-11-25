@@ -138,33 +138,13 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
             if (!mounted) return;
 
-            // Send file to ML stuff using HTTP POST
-            http.MultipartRequest request = http.MultipartRequest(
-                'POST', Uri.parse('http://10.0.2.2:5000/upload'));
+            var request = http.MultipartRequest('POST', Uri.parse('http://0.0.0.0:5000/upload'));
 
-            request.files.add(
-              await http.MultipartFile.fromPath(
-                'image',
-                image.path,
-                filename: 'testimage',
-                contentType: MediaType('image', 'png'),
-              ),
-            );
+            request.files.add(http.MultipartFile.fromBytes('image', File(image.path).readAsBytesSync(),filename: image.path));
 
-            http.StreamedResponse r = await request.send();
-            debugPrint(r.statusCode.toString());
-            final response = await r.stream.transform(utf8.decoder).join();
+            var res = await request.send();
+            debugPrint(res.toString());
 
-            // If the picture was taken, display it on a new screen.
-            await Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => DisplayPictureScreen(
-                  // Pass the image to the DisplayPictureScreen widget.
-                  tempImagePath: image.path,
-                  isGoose: response,
-                ),
-              ),
-            );
           } catch (e) {
             // If an error occurs, log the error to the console.
             print(e);
