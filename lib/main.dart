@@ -41,10 +41,23 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('GeeseReel'),
-        iconTheme: const IconThemeData(color: Colors.white),
-        backgroundColor: Colors.brown,
+      appBar:
+      PreferredSize(
+          preferredSize: const Size.fromHeight(75.0), // here the desired height
+          child:
+            AppBar(
+              titleSpacing: 0.0,
+              title: const Text(
+                'GeeseReel',
+                style:
+                TextStyle(
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.bold
+                ),
+              ),
+              iconTheme: const IconThemeData(color: Colors.white),
+              backgroundColor: Colors.brown,
+            ),
       ),
       body: Center(
         child: Container(
@@ -70,9 +83,10 @@ class HomePage extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 104, 104, 104),
+                  backgroundColor: const Color.fromARGB(255, 189, 171, 116),
                   textStyle: const TextStyle(
                     fontSize: 25.0,
+                    fontWeight: FontWeight.bold
                   ),
                 ),
                 child: const Text('Daily Photo !'),
@@ -127,7 +141,23 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Find a Goose!')),
+      appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(75.0), // here the desired height
+          child:
+            AppBar(
+              titleSpacing: 0.0,
+              title: const Text(
+                'Find your Goose!',
+                style:
+                TextStyle(
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.bold
+                ),
+              ),
+              iconTheme: const IconThemeData(color: Colors.white),
+              backgroundColor: Colors.brown,
+            ),
+      ),
       // You must wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner until the
       // controller has finished initializing.
@@ -143,40 +173,48 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        // Provide an onPressed callback.
-        onPressed: () async {
-          // Take the Picture in a try / catch block. If anything goes wrong,
-          // catch the error.
-          try {
-            // Ensure that the camera is initialized.
-            await _initializeControllerFuture;
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: SizedBox(
+        height: 115.0,
+        width: 115.0,
+        child: FittedBox(
+          child: FloatingActionButton(
+            backgroundColor: const Color.fromARGB(255, 189, 171, 116),
+            // Provide an onPressed callback.
+            onPressed: () async {
+              // Take the Picture in a try / catch block. If anything goes wrong,
+              // catch the error.
+              try {
+                // Ensure that the camera is initialized.
+                await _initializeControllerFuture;
 
-            // Attempt to take a picture and get the file `image`
-            // where it was saved.
-            final image = await _controller.takePicture();
+                // Attempt to take a picture and get the file `image`
+                // where it was saved.
+                final image = await _controller.takePicture();
 
-            if (!mounted) return;
+                if (!mounted) return;
 
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        DisplayPictureScreen(tempImagePath: image.path)));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            DisplayPictureScreen(tempImagePath: image.path)));
 
-            // var request = http.MultipartRequest('POST', Uri.parse('http://127.0.0.1:5000/upload'));
+                // var request = http.MultipartRequest('POST', Uri.parse('http://127.0.0.1:5000/upload'));
 
-            // request.files.add(http.MultipartFile.fromBytes('image', File(image.path).readAsBytesSync(),filename: image.path));
+                // request.files.add(http.MultipartFile.fromBytes('image', File(image.path).readAsBytesSync(),filename: image.path));
 
-            // var res = await request.send();
-            // debugPrint(res.toString());
+                // var res = await request.send();
+                // debugPrint(res.toString());
 
-          } catch (e) {
-            // If an error occurs, log the error to the console.
-            print(e);
-          }
-        },
-        child: const Icon(Icons.camera_alt),
+              } catch (e) {
+                // If an error occurs, log the error to the console.
+                print(e);
+              }
+            },
+            child: const Icon(Icons.camera_alt),
+          ),
+        ),
       ),
     );
   }
@@ -191,25 +229,52 @@ class DisplayPictureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Your Score: 69")),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(75.0), // here the desired height
+          child:
+            AppBar(
+              titleSpacing: 0.0,
+              title: const Text(
+                'Score: 69',
+                style:
+                TextStyle(
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.bold
+                ),
+              ),
+              iconTheme: const IconThemeData(color: Colors.white),
+              backgroundColor: Colors.brown,
+            ),
+      ),
         // The image is stored as a file on the device. Use the `Image.file`
         // constructor with the given path to display the image.
-        body: SafeArea(
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                SizedBox(
-                  height: MediaQuery.of(context).size.height - 197,
-                  child: Image.asset(tempImagePath),
-                ),
-                ElevatedButton(
-                  child: const Text('Save Master-geese?'),
+        body: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              SizedBox(
+                height: MediaQuery.of(context).size.height - 328,
+                child: Image.asset(tempImagePath),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 35.0, horizontal: 20.0),
+                child: ElevatedButton(
                   onPressed: () {
                     // Save photo to image gallery
                     GallerySaver.saveImage(tempImagePath);
                   },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 189, 171, 116),
+                      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 40),
+                      textStyle: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold
+                      )
+                    ),
+                  child: const Text('Save this Mastergeese?', textAlign: TextAlign.center,),
                 )
-              ]),
-        ));
+              )
+            ]
+          )
+        );
   }
 }
