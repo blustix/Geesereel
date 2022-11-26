@@ -43,21 +43,41 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('GeeseReel'),
+        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: Colors.brown,
       ),
       body: Center(
-        child: ElevatedButton(
-          child: const Text('Daily Photo'),
-          onPressed: () {
-            // Navigate to second route when tapped.
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => TakePictureScreen(
-                        camera: camera,
-                      )),
-            );
-          },
-        ),
+        child: Container(
+            alignment: Alignment.center,
+            constraints: const BoxConstraints.expand(),
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/geese-background.png'),
+                  fit: BoxFit.cover),
+            ),
+            child: SizedBox(
+              height: 125,
+              width: 225,
+              child: ElevatedButton(
+                onPressed: () {
+                  // Navigate to second route when tapped.
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => TakePictureScreen(
+                              camera: camera,
+                            )),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromARGB(255, 104, 104, 104),
+                  textStyle: const TextStyle(
+                    fontSize: 25.0,
+                  ),
+                ),
+                child: const Text('Daily Photo !'),
+              ),
+            )),
       ),
     );
   }
@@ -138,12 +158,18 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
             if (!mounted) return;
 
-            var request = http.MultipartRequest('POST', Uri.parse('http://0.0.0.0:5000/upload'));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        DisplayPictureScreen(tempImagePath: image.path)));
 
-            request.files.add(http.MultipartFile.fromBytes('image', File(image.path).readAsBytesSync(),filename: image.path));
+            // var request = http.MultipartRequest('POST', Uri.parse('http://127.0.0.1:5000/upload'));
 
-            var res = await request.send();
-            debugPrint(res.toString());
+            // request.files.add(http.MultipartFile.fromBytes('image', File(image.path).readAsBytesSync(),filename: image.path));
+
+            // var res = await request.send();
+            // debugPrint(res.toString());
 
           } catch (e) {
             // If an error occurs, log the error to the console.
@@ -159,15 +185,13 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 // A widget that displays the picture taken by the user.
 class DisplayPictureScreen extends StatelessWidget {
   final String tempImagePath;
-  final String isGoose;
 
-  const DisplayPictureScreen(
-      {super.key, required this.tempImagePath, required this.isGoose});
+  const DisplayPictureScreen({super.key, required this.tempImagePath});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Your Score: $isGoose")),
+        appBar: AppBar(title: Text("Your Score: 69")),
         // The image is stored as a file on the device. Use the `Image.file`
         // constructor with the given path to display the image.
         body: SafeArea(
@@ -175,12 +199,11 @@ class DisplayPictureScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 SizedBox(
-                  height: 200.0,
-                  width: 200.0,
+                  height: MediaQuery.of(context).size.height - 197,
                   child: Image.asset(tempImagePath),
                 ),
                 ElevatedButton(
-                  child: const Text('Save Masterpiece?'),
+                  child: const Text('Save Master-geese?'),
                   onPressed: () {
                     // Save photo to image gallery
                     GallerySaver.saveImage(tempImagePath);
